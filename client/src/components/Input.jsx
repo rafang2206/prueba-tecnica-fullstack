@@ -7,7 +7,7 @@ function Input({
   name, 
   placeholder, 
   error = false, 
-  errorMessage 
+  errorMessage = ''
 }) {
   return (
     <>
