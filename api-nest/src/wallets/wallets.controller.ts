@@ -1,18 +1,18 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { WalletsService } from './wallets.service';
-import { CreateWalletDto } from './dto/create-wallet.dto';
+import { RechargeWalletDto } from './dto/recharge-wallet.dto';
 
 @Controller('wallets')
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 
   @Post('/recharge-wallet')
-  create(@Body() createWalletDto: CreateWalletDto) {
-    return this.walletsService.create(createWalletDto);
+  rechargeWallet(@Body() rechargeWalletWalletDto: RechargeWalletDto) {
+    return this.walletsService.rechargeWallet(rechargeWalletWalletDto);
   }
 
   @Get('/balance')
-  findAll() {
-    return this.walletsService.findAll();
+  balance() {
+    return this.walletsService.balance();
   }
 }

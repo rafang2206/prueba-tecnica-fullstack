@@ -1,26 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { CreateWalletDto } from './dto/create-wallet.dto';
-import { UpdateWalletDto } from './dto/update-wallet.dto';
+import { RechargeWalletDto } from './dto/recharge-wallet.dto';
+import { User } from 'src/users/schemas/user.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Wallet } from './schemas/wallet.schema';
 
 @Injectable()
 export class WalletsService {
-  create(createWalletDto: CreateWalletDto) {
-    return 'This action adds a new wallet';
+  constructor(@InjectModel(Wallet.name) private walletModel: Model<Wallet>) {}
+
+  rechargeWallet(rechargeWalletDto: RechargeWalletDto) {
+    return rechargeWalletDto;
   }
 
-  findAll() {
+  balance() {
     return `This action returns all wallets`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} wallet`;
-  }
-
-  update(id: number, updateWalletDto: UpdateWalletDto) {
-    return `This action updates a #${id} wallet`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} wallet`;
+  createWallet(user: User) {
+    const walletCreated = new this.walletModel({
+      balance: 0,
+      user,
+    });
+    walletCreated.save();
+    return walletCreated;
   }
 }
