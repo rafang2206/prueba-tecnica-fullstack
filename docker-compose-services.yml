@@ -48,5 +48,18 @@ services:
     networks:
       - epayco
 
+  client:
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
+      args:
+        - VITE_BACKEND_URL=${BACKEND_URL:-http://localhost}
+    environment:
+      - VITE_BACKEND_URL=${BACKEND_URL}
+    ports:
+      - 5173:80
+    networks:
+      - epayco
+
 networks:
   epayco:
