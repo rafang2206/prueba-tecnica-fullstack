@@ -4,6 +4,7 @@ import Wallet from './pages/wallets/index';
 import Register from './pages/register/index';
 import Buys from './pages/buys/index'
 import Layout from "./layouts/Layout";
+import ConfirmBuy from "./pages/buys/confirm";
 
 function App() {
   return (
@@ -13,7 +14,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/wallets" element={<Wallet />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/buys" element={<Buys />} />
+          <Route path="/buys"  >
+            <Route index element={<Buys />}/>
+            <Route path="confirm" element={<ConfirmBuy />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

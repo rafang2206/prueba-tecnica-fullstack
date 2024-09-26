@@ -28,7 +28,7 @@ function Wallets() {
       {section == 'balance' ? 
         <>
           <GetBalance setBalance={setBalance} />
-          {balance && <p className='text-white font-bold text-xl mt-4'>Tienes un saldo de ${balance}</p>}
+          {balance !== null && <p className='text-white font-bold text-xl mt-4'>Tienes un saldo de ${balance}</p>}
         </> 
         : 
         <RechargeBalance />

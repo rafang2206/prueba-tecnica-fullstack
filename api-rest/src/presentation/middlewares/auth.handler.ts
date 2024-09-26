@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { logger } from '../../config/logger';
 import { HTTP_STATUS } from '../../constants/httpStatus';
 
 export default function authHandler() {

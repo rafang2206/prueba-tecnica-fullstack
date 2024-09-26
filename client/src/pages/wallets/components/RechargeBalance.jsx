@@ -71,7 +71,7 @@ function RechargeBalance() {
               <button 
                 type='submit' 
                 className='bg-yellow-400 w-full p-2 rounded-full font-semibold'>
-                  Registrar
+                  Recargar
               </button>
             </div>
           </div>

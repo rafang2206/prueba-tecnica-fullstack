@@ -15,7 +15,7 @@ export class Buy {
   @Prop()
   amount: number;
 
-  @Prop({ unique: true })
+  @Prop()
   sessionId: string;
 
   @Prop()
