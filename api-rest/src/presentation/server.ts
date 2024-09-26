@@ -1,6 +1,8 @@
 import express, { Express } from 'express';
+import cors from 'cors';
 import { AppRoutes } from './routes';
 import { logger } from '../config/logger';
+import { CONFIGURATION } from '../config/configuration';
 
 export class Server {
 
@@ -12,6 +14,20 @@ export class Server {
 
   async start(){
     this.app.use(express.json());
+    const permittedDomains = [CONFIGURATION.FRONTEND_URL];
+
+    const corsOptions = {
+      origin: function(origin: any, callback: any){
+        if(+permittedDomains.indexOf !== -1 ){
+          callback(null, true);
+        } else {
+          callback(new Error('Not permitted'));
+        }
+      },
+      credentials: true
+    };
+
+    this.app.use(cors(corsOptions));
 
     const appRoutes = AppRoutes.routes;
 
