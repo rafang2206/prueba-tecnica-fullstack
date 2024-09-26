@@ -8,7 +8,6 @@ import { CustomResponse } from 'src/commons/response/custom-response';
 import { Wallet } from 'src/wallets/schemas/wallet.schema';
 import { User } from 'src/users/schemas/user.schema';
 import { Buy, StatusBuy } from './schemas/buy.schema';
-import configuration from 'src/config/configuration';
 
 @Injectable()
 export class BuysService {
@@ -50,7 +49,7 @@ export class BuysService {
       from: 'Epayco Prueba Tecnica <pruebatecnicafullstack@gmail.com>',
       to: user.email,
       subject: `Confirmation Code`,
-      html: `<p>Click Here to verify your buy <a href=${configuration().frontendUrl + code}>Click Here</a></p>`,
+      html: `<p>Code to verify buy ${code}</p>`,
     });
 
     const sessionId = crypto.randomUUID();
