@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  mongo-db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+    volumes:
+      - type: bind
+        source: ./mongo
+        target: /data/db
+    ports:
+      - 27018:27017
+    networks:
+      - epayco
+
+  nest-api:
+    depends_on:
+      - mongo-db
+    build:
+      context: ./api-nest
+      dockerfile: ./Dockerfile
+    environment:
+      - MONGO_URL=mongodb://${MONGO_USER}:${MONGO_PASS}@mongo-db:27017
+      - PORT=${PORT_NEST_API}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_USERNAME=${EMAIL_USERNAME}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - FRONTEND_URL_ROUTE_CODE=${FRONTEND_URL_ROUTE_CODE}
+    ports:
+      - ${PORT_NEST_API}:${PORT_NEST_API}
+    networks:
+      - epayco
+
+  api-client:
+    depends_on:
+      - nest-api
+    build:
+      context: ./api-rest
+      dockerfile: ./Dockerfile
+    environment:
+      - PORT=${PORT_REST_API}
+      - SERVER_URL=http://nest-api:${PORT_NEST_API}/api/v1
+    ports:
+      - ${PORT_REST_API}:${PORT_REST_API}
+    networks:
+      - epayco
+
+networks:
+  epayco:

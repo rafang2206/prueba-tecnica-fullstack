@@ -13,6 +13,6 @@ services:
         target: /data/db
     ports:
       - 27018:27017
-      
+
 networks:
   epayco:
