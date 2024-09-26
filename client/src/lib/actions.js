@@ -27,3 +27,14 @@ export const rechargeBalance = async(values) => {
     toast.error(error?.response?.data?.message_error);
   }
 }
+
+export const getCodeOfBuy = async(values) => {
+  try {
+    const { data } = await apiRequest.post('/buys/get-code', { ...values });
+    toast.success(data?.message);
+    return data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message_error);
+    return error?.response?.data;
+  }
+}
