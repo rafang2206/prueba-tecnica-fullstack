@@ -58,7 +58,7 @@ function Home() {
         ))}
         </>
       :
-        <BuyProduct />
+        <BuyProduct setSelectedProduct={setSelectedProduct} />
       }
     </div>
   )
