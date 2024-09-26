@@ -14,7 +14,7 @@ function NavBar() {
           <Link to="/wallets">Wallet</Link>
         </li>
         <li className="hover:text-gray-400">
-          <Link to="/buys">Comprar</Link>
+          <Link to="/buys">Buy</Link>
         </li>
       </ul>
     </nav>
