@@ -1,26 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { CreateBuyDto } from './dto/create-buy.dto';
-import { UpdateBuyDto } from './dto/update-buy.dto';
+import { BuyGetCodeDto } from './dto/buy-getcode.dto';
 
 @Injectable()
 export class BuysService {
-  create(createBuyDto: CreateBuyDto) {
-    return 'This action adds a new buy';
+  getCode(buyGetCodeDto: BuyGetCodeDto) {
+    return buyGetCodeDto;
   }
 
-  findAll() {
-    return `This action returns all buys`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} buy`;
-  }
-
-  update(id: number, updateBuyDto: UpdateBuyDto) {
-    return `This action updates a #${id} buy`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} buy`;
+  confirm(code: number) {
+    return code;
   }
 }
