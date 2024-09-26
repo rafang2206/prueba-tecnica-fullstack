@@ -4,6 +4,7 @@ import { WalletsModule } from './wallets/wallets.module';
 import { BuysModule } from './buys/buys.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { CommonsModule } from './commons/commons.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -13,6 +14,7 @@ import configuration from './config/configuration';
     UsersModule,
     WalletsModule,
     BuysModule,
+    CommonsModule,
   ],
   controllers: [],
   providers: [],
