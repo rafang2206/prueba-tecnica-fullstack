@@ -1,34 +1,25 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { BuysService } from './buys.service';
-import { CreateBuyDto } from './dto/create-buy.dto';
-import { UpdateBuyDto } from './dto/update-buy.dto';
+import { BuyGetCodeDto } from './dto/buy-getcode.dto';
 
 @Controller('buys')
 export class BuysController {
   constructor(private readonly buysService: BuysService) {}
 
-  @Post()
-  create(@Body() createBuyDto: CreateBuyDto) {
-    return this.buysService.create(createBuyDto);
+  @Post('/get-code')
+  getCode(@Body() buyGetCodeDto: BuyGetCodeDto) {
+    return this.buysService.getCode(buyGetCodeDto);
   }
 
-  @Get()
-  findAll() {
-    return this.buysService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.buysService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBuyDto: UpdateBuyDto) {
-    return this.buysService.update(+id, updateBuyDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.buysService.remove(+id);
+  @Get('/confirm/:code')
+  confirm(@Param('code', ParseIntPipe) code: number) {
+    return this.buysService.confirm(code);
   }
 }
