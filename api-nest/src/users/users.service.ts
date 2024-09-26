@@ -4,10 +4,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './schemas/user.schema';
 import { CustomResponse } from 'src/commons/response/custom-response';
+import { WalletsService } from 'src/wallets/wallets.service';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>,
+    private readonly walletService: WalletsService,
+  ) {}
   async create(createUserDto: CreateUserDto) {
     const userDocumentExist = await this.userModel.findOne({
       document: createUserDto.document,
@@ -34,6 +38,8 @@ export class UsersService {
       updateAt: date,
     });
     await createdUser.save();
+
+    this.walletService.createWallet(createdUser);
 
     return new CustomResponse('User Created Successfully', createdUser);
   }
