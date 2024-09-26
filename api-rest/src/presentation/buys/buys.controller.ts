@@ -13,39 +13,53 @@ export class BuyController {
 
   public getCode = async (req: Request, res: Response) => {
     const buyDto = new BuyGetCodeDto(req.body)
-    logger.info("Request Code for Buy");
-    const result = await this.buyRepository.getCode(buyDto);
-    if(!result.success){
-      logger.error("Error requesting code for Buy", {
-        "controller": "buys.controller"
-      });
+    try {
+      logger.info("Request Code for Buy");
+      const result = await this.buyRepository.getCode(buyDto);
+      if(!result.success){
+        logger.error("Error requesting code for Buy", {
+          "controller": "buys.controller"
+        });
+        return res
+        .status(result?.cod_error || HTTP_STATUS.INTERNAL_SERVER_ERROR)
+        .json(result)
+      }
+      logger.info("Get Code for Buy Successfully");
       return res
-      .status(result?.cod_error || HTTP_STATUS.INTERNAL_SERVER_ERROR)
-      .json(result)
+        .status(HTTP_STATUS.OK)
+        .json(result)
+    } catch (error) {
+      logger.error(error);
+      return res
+        .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Internal Server Error', success: false }) 
     }
-    logger.info("Get Code for Buy Successfully");
-    return res
-      .status(HTTP_STATUS.OK)
-      .json(result)
   }
 
   public confirmCode = async (req: Request, res: Response) => {
     const { code } = req.params;
-    const sessionId = req.sessionId;
-    logger.info("Confirm Code for Buy");
-    const buyConfirmCodeDto = new BuyConfirmCodeDto({ code, sessionId: String(sessionId) });
-    const result = await this.buyRepository.confirmBuy(buyConfirmCodeDto);
-    if(!result.success){
-      logger.error("Error Confirm Code for Buy", {
-        "controller": "buys.controller"
-      });
+    try {
+      const sessionId = req.sessionId;
+      logger.info("Confirm Code for Buy");
+      const buyConfirmCodeDto = new BuyConfirmCodeDto({ code, sessionId: String(sessionId) });
+      const result = await this.buyRepository.confirmBuy(buyConfirmCodeDto);
+      if(!result.success){
+        logger.error("Error Confirm Code for Buy", {
+          "controller": "buys.controller"
+        });
+        return res
+        .status(result?.cod_error || HTTP_STATUS.INTERNAL_SERVER_ERROR)
+        .json(result)
+      }
+      logger.info("Confirm Code for Buy Successfully");
       return res
-      .status(result?.cod_error || HTTP_STATUS.INTERNAL_SERVER_ERROR)
-      .json(result)
+        .status(HTTP_STATUS.OK)
+        .json(result)
+    } catch (error) {
+      logger.error(error);
+      return res
+        .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Internal Server Error', success: false }) 
     }
-    logger.info("Confirm Code for Buy Successfully");
-    return res
-      .status(HTTP_STATUS.OK)
-      .json(result)
   }
 }
