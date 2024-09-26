@@ -27,7 +27,7 @@ export class WalletsService {
     const wallet = await this.walletModel.findOne({ user });
     wallet.balance += rechargeWalletDto.amount;
     await wallet.save();
-    return new CustomResponse('Balance Get Successfully', {
+    return new CustomResponse('Balance Recharge Successfully', {
       balance: wallet.balance,
     });
   }
