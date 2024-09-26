@@ -38,3 +38,17 @@ export const getCodeOfBuy = async(values) => {
     return error?.response?.data;
   }
 }
+
+
+export const confirmBuy = async(code, sessionId) => {
+  try {
+    const { data } = await apiRequest.get(`/buys/confirm/${code}`, {
+      headers: {
+        Authorization: `Bearer ${sessionId}`
+      }
+    });
+    return data;
+  } catch (error) {
+    return error?.response?.data;
+  }
+}

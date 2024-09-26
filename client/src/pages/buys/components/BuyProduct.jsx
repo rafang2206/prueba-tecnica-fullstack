@@ -62,7 +62,7 @@ function BuyProduct() {
               <button 
                 type='submit' 
                 className='bg-yellow-400 w-full p-2 rounded-full font-semibold'>
-                  Obtener Balance
+                  Comprar
               </button>
             </div>
           </div>
