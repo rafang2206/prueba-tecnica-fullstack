@@ -23,6 +23,7 @@ services:
       context: ./api-nest
       dockerfile: ./Dockerfile
     environment:
+      - SECRET=${SECRET}
       - MONGO_URL=mongodb://${MONGO_USER}:${MONGO_PASS}@mongo-db:27017
       - PORT=${PORT_NEST_API}
       - EMAIL_HOST=${EMAIL_HOST}
