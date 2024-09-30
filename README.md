@@ -44,7 +44,8 @@ Esto creara la Base de datos con Docker.
 
 3. dirigirse a la carpeta api-nest
 4. Copiar las variables de Entorno del archivo .env.example a un archivo .env
-
+PORT = PUERTO EN EL QUE SE EJECUTARA EL SERVIDOR
+SECRET = SECRETO PARA EL JWT
 MONGO_URL = Url de la base de Datos Mongo
 
 5. Crear una clave de Apps de Gmail y agregar a la variable de entorno

@@ -9,4 +9,5 @@ export default () => ({
     },
   },
   frontendUrl: process.env.FRONTEND_URL_ROUTE_CODE,
+  secret: process.env.SECRET,
 });

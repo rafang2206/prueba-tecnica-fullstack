@@ -4,11 +4,11 @@ import {
   Post,
   Body,
   Param,
-  Headers,
   ParseIntPipe,
   UseInterceptors,
   UseFilters,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { BuysService } from './buys.service';
 import { BuyGetCodeDto } from './dto/buy-getcode.dto';
@@ -30,11 +30,8 @@ export class BuysController {
   @Get('/confirm/:code')
   @UseGuards(AuthorizationGuard)
   @UseFilters(new HttpExceptionFilter())
-  confirm(
-    @Param('code', ParseIntPipe) code: number,
-    @Headers('authorization') authHeader: string,
-  ) {
-    const sessionId = authHeader.split(' ')[1];
-    return this.buysService.confirm(code, sessionId);
+  confirm(@Param('code', ParseIntPipe) code: number, @Req() request: Request) {
+    const buyId = request['user']['buyId'];
+    return this.buysService.confirm(code, buyId);
   }
 }

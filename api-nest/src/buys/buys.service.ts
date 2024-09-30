@@ -8,10 +8,12 @@ import { CustomResponse } from 'src/commons/response/custom-response';
 import { Wallet } from 'src/wallets/schemas/wallet.schema';
 import { User } from 'src/users/schemas/user.schema';
 import { Buy, StatusBuy } from './schemas/buy.schema';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class BuysService {
   constructor(
+    private jwtService: JwtService,
     private readonly mailService: MailerService,
     @InjectModel(Buy.name) private buyModel: Model<Buy>,
     @InjectModel(Wallet.name) private walletModel: Model<Wallet>,
@@ -52,15 +54,22 @@ export class BuysService {
       html: `<p>Code to verify buy ${code}</p>`,
     });
 
-    const sessionId = crypto.randomUUID();
-
     const buy = new this.buyModel({
       amount: product.price,
-      sessionId,
       code,
       status: StatusBuy.PENDING,
       user,
     });
+
+    const payload = {
+      userId: user._id,
+      document: user.document,
+      email: user.email,
+      buyId: buy._id,
+    };
+
+    const sessionId = await this.jwtService.signAsync(payload);
+
     await buy.save();
 
     return new CustomResponse('Get Code Successfully', {
@@ -68,9 +77,9 @@ export class BuysService {
     });
   }
 
-  async confirm(code: number, sessionId: string) {
+  async confirm(code: number, buyId: string) {
     const buy = await this.buyModel.findOne({
-      sessionId,
+      _id: buyId,
       status: StatusBuy.PENDING,
     });
     if (!buy) {
